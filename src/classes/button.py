@@ -2,12 +2,15 @@ import pygame
 
 
 class Button:
-    def __init__(self, baseImage, x, y, text='', onClick=None):
+    def __init__(self, baseImage, x, y, text='', onClick=None, fontPath="./font/pixel.ttf", fontSize=35, fontColor=(0, 0, 0)):
         self.baseImage = pygame.image.load(baseImage)
         self.x = x
         self.y = y
         self.text = text
         self.onClick = onClick
+        self.fontPath = fontPath
+        self.fontSize = fontSize
+        self.fontColor = fontColor
         self.rect = self.baseImage.get_rect()
         self.width = self.rect.right
         self.height = self.rect.bottom
@@ -16,8 +19,8 @@ class Button:
     def draw(self, window, outline=None):
         window.blit(self.baseImage, self.rect)
         if self.text != '':
-            font = pygame.font.SysFont('/font/pixel.ttf', 45)
-            text = font.render(self.text, 1, (0, 0, 0))
+            font = pygame.font.Font(self.fontPath, self.fontSize)
+            text = font.render(self.text, 1, self.fontColor)
             window.blit(text,
                      (self.x + (self.width / 2 - text.get_width() / 2),
                       self.y + (self.height / 2 - text.get_height() / 2)))

@@ -10,7 +10,8 @@ def main():
     window = pygame.display.set_mode((400, 500))
     pygame.display.set_caption('Tech Party')
 
-    MainMenuButtons = [Button("./asset/blue_button.png", 150, 225, "Play", printMessage)]
+    MainMenuButtons = [Button("./asset/blue_button.png", 150, 225, "Play", printMessage,
+                              "./font/pixel.ttf", 35, (255, 255, 255))]
     MainMenuButtons[0].centerIt()
     MainMenu = Menu("./asset/background.png", [0, 0], MainMenuButtons, "Main Menu")
     MainMenu.setName()
