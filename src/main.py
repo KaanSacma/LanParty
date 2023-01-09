@@ -12,9 +12,10 @@ def main():
 
     MainMenuButtons = [Button((0, 255, 0), 150, 225, 250, 100, "Play", printMessage)]
     MainMenuButtons[0].centerIt()
-    MainMenu = Menu("./src/asset/background.png", [0, 0], MainMenuButtons, "Main Menu")
+    MainMenu = Menu("../assets/background.png", [0, 0], MainMenuButtons, "Main Menu")
     MainMenu.setName()
     running = True
+    
 
     while running:
         for event in pygame.event.get():

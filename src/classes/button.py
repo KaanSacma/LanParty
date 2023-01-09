@@ -27,7 +27,6 @@ class Button:
         self.y = (h / 2) - (self.height / 2)
 
     def isOver(self, pos):
-        # Pos is the mouse position or a tuple of (x,y) coordinates
         if pos[0] > self.x and pos[0] < self.x + self.width:
             if pos[1] > self.y and pos[1] < self.y + self.height:
                 return True
