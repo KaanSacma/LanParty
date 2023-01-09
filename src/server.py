@@ -4,6 +4,13 @@ import pygame
 from pygame.locals import *
 from socket import socket
 
+def send_msg_and_receiv(to_, from_):
+
+    while (1):
+        notif = from_.recv(1024).decode() #nb de char lu par def
+        if (len(notif) > 0):
+            to_.send(notif.encode())
+
 try:
     server = socket()
 
