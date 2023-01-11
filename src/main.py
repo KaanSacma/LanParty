@@ -1,7 +1,6 @@
 import sys
 from classes.button import *
 from classes.menu import *
-#from games.bomberman import *
 
 running = True
 
