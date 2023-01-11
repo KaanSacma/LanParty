@@ -1,6 +1,5 @@
 import pygame
 
-
 class Menu:
     def __init__(self, backgroundImage, position, buttons, name, images, imagesPos):
         self.background = pygame.image.load(backgroundImage)
