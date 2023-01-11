@@ -1,10 +1,9 @@
 import pygame
 
 
-class Menu:
-    def __init__(self, backgroundImage, position, buttons, name, images, imagesPos):
+class Game:
+    def __init__(self, backgroundImage, position, name, images, imagesPos):
         self.background = pygame.image.load(backgroundImage)
-        self.buttons = buttons
         self.name = name
         self.images = images
         self.imagesPos = imagesPos
@@ -27,10 +26,7 @@ class Menu:
     def drawImages(self, window):
         for i in range(len(self.imagesLoaded)):
             window.blit(self.imagesLoaded[i], self.rects[i])
+
     def drawBackground(self, window):
         window.fill([255, 255, 255])
         window.blit(self.background, self.rect)
-
-    def drawButtons(self, window, outline=None):
-        for button in self.buttons:
-            button.draw(window, outline)
