@@ -8,7 +8,6 @@ from pygame.locals import *
 py.init() 
 
 clock = py.time.Clock()
-bullet_list = pygame.sprite.Group()
 
 # Sprites
 spaceship = pygame.image.load("spaceship.png")
