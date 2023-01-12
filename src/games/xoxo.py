@@ -1,11 +1,12 @@
 import pygame
 
 from classes.game import *
+from classes.button import *
 
 
 class Xoxo(Game):
-    def __init__(self, backgroundImage, position, name, images, imagesPos, scores):
-        super().__init__(backgroundImage, position, name, images, imagesPos, scores)
+    def __init__(self, backgroundImage, position, name, images, imagesPos, buttons, scores):
+        super().__init__(backgroundImage, position, name, images, imagesPos, buttons, scores)
         self.ChoiceImages = ["", "", "",
                              "", "", "",
                              "", "", ""]
@@ -16,6 +17,22 @@ class Xoxo(Game):
         self.StockChoice = ["", "", "",
                             "", "", "",
                             "", "", ""]
+        self.canPlay = True
+        self.font = pygame.font.Font("./font/pixel.ttf", 32)
+        self.text = ""
+
+    def resetXoxo(self):
+        self.ChoiceImages = ["", "", "",
+                             "", "", "",
+                             "", "", ""]
+        self.ChoiceImagesRects = [(0, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0),
+                                  (0, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0),
+                                  (0, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0)]
+        self.StockChoice = ["", "", "",
+                            "", "", "",
+                            "", "", ""]
+        self.Choice = 'X'
+        self.canPlay = True
 
     def isOver(self, pos, i):
         if self.imagesPos[i][0] < pos[0] < self.imagesPos[i][0] + 70:
@@ -51,21 +68,29 @@ class Xoxo(Game):
             if type(self.ChoiceImages[i]) is pygame.Surface:
                 window.blit(self.ChoiceImages[i], self.ChoiceImagesRects[i])
 
-    def printWinner(self):
+    def setTextWinner(self):
         if self.Choice == 'X':
-            print("The winner is O")
+            self.text = self.font.render("The Winner is O", 1, (255, 255, 255))
         else:
-            print("The winner is X")
+            self.text = self.font.render("The Winner is X", 1, (255, 255, 255))
+
     def checkWin(self):
         if self.isSameChoice(0, 1, 2) or self.isSameChoice(3, 4, 5) or self.isSameChoice(6, 7, 8):
-            self.printWinner()
+            self.canPlay = False
+            self.setTextWinner()
         elif self.isSameChoice(0, 3, 6) or self.isSameChoice(1, 4, 7) or self.isSameChoice(2, 5, 8):
-            self.printWinner()
+            self.canPlay = False
+            self.setTextWinner()
         elif self.isSameChoice(0, 4, 8) or self.isSameChoice(2, 4, 6):
-            self.printWinner()
+            self.canPlay = False
+            self.setTextWinner()
 
 
 def createXoxo():
+    XoxoButtons = [
+        Button("./asset/blue_button.png", 0, 0, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
+        Button("./asset/blue_button.png", 500, 500, "Continue", None, "./font/pixel.ttf", 25, (255, 255, 255), None)
+    ]
     GameXoxoImages = [
         "./asset/square.png", "./asset/square.png", "./asset/square.png",
         "./asset/square.png", "./asset/square.png", "./asset/square.png",
@@ -76,6 +101,7 @@ def createXoxo():
         (100, 180), (180, 180), (260, 180),
         (100, 260), (180, 260), (260, 260)
     ]
-    GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, [0, 0])
+    GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, XoxoButtons, [0, 0])
     GameXoxo.loadImages()
+    GameXoxo.buttons[1].onClick = GameXoxo.resetXoxo
     return GameXoxo

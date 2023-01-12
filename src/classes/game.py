@@ -2,11 +2,12 @@ import pygame
 
 
 class Game:
-    def __init__(self, backgroundImage, position, name, images, imagesPos, scores):
+    def __init__(self, backgroundImage, position, name, images, imagesPos, buttons, scores):
         self.background = pygame.image.load(backgroundImage)
         self.name = name
         self.images = images
         self.imagesPos = imagesPos
+        self.buttons = buttons
         self.scores = scores
         self.imagesLoaded = images
         self.rect = self.background.get_rect()
@@ -30,3 +31,8 @@ class Game:
     def drawBackground(self, window):
         window.fill([255, 255, 255])
         window.blit(self.background, self.rect)
+
+    def drawButtons(self, window, outline=None):
+        for button in self.buttons:
+            if hasattr(button, "draw"):
+                button.draw(window, outline)

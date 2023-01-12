@@ -1,6 +1,9 @@
+import pygame
+
 from launcher import *
 
 running = True
+
 
 def closeGame():
     global running
@@ -15,7 +18,7 @@ def main():
     pygame.init()
     info = pygame.display.Info()
     WIDTH, HEIGHT = info.current_w, info.current_h
-    window = pygame.display.set_mode((WIDTH / 2, HEIGHT))
+    window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption('Tech Party')
 
     PlayerSelectionMenu = createPlayerSelectionMenu()
@@ -35,7 +38,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if hasattr(currentMenu, "buttons"):
                     for button in currentMenu.buttons:
-                        if button.isOver(mousePos):
+                        if hasattr(button, "isOver") and button.isOver(mousePos):
                             if button.linkedMenu:
                                 currentMenu = button.linkedMenu
                                 currentMenu.setName()
@@ -43,7 +46,7 @@ def main():
                             if button.onClick is not None:
                                 button.onClick()
                 if hasattr(currentMenu, "images"):
-                    if currentMenu.name == "Xoxo":
+                    if (currentMenu.name == "Xoxo") and (currentMenu.canPlay == True):
                         for i in range(len(currentMenu.images)):
                             if currentMenu.isOver(mousePos, i):
                                 currentMenu.addChoice(i)
@@ -51,10 +54,13 @@ def main():
         currentMenu.drawBackground(window)
         if currentMenu.images is not None:
             currentMenu.drawImages(window)
-        if hasattr(currentMenu, 'buttons'):
+        if hasattr(currentMenu, 'buttons') and currentMenu.name != "Xoxo":
             currentMenu.drawButtons(window)
         if currentMenu.name == "Xoxo":
             currentMenu.drawChoiceImages(window)
+            if not currentMenu.canPlay:
+                window.blit(currentMenu.text,((WIDTH / 2) - 150, 50))
+                currentMenu.drawButtons(window)
         pygame.display.update()
 
 
