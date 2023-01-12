@@ -14,7 +14,7 @@ def send_msg_and_receiv(to_, from_):
 try:
     server = socket()
 
-    server.bind(("127.0.0.1", 5000)) #tuple = une liste constante
+    server.bind(("127.0.0.1", 5505)) #tuple = une liste constante
 
     server.listen(2)
 

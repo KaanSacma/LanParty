@@ -1,41 +1,68 @@
 import pygame
-from classes.button import *
-from classes.menu import *
 
-def printMessage(string):
-    print(string)
+from launcher import *
+
+running = True
+
+
+def closeGame():
+    global running
+    running = False
+    pygame.display.quit()
+    pygame.quit()
+    sys.exit()
+
 
 def main():
+    global running
     pygame.init()
-    window = pygame.display.set_mode((960, 1080), pygame.RESIZABLE)
+    info = pygame.display.Info()
+    WIDTH, HEIGHT = info.current_w, info.current_h
+    window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption('Tech Party')
 
-    MainMenuButtons = [Button((0, 255, 0), 150, 225, 250, 100, "Play", printMessage)]
-    MainMenuButtons[0].centerIt()
-    MainMenu = Menu("../assets/background.png", [0, 0], MainMenuButtons, "Main Menu")
-    MainMenu.setName()
-    running = True
-    
+    PlayerSelectionMenu = createPlayerSelectionMenu()
+    SettingsMenu = createSettingsMenu()
+    MainMenu = createMainMenu(SettingsMenu, PlayerSelectionMenu, HEIGHT)
+    SettingsMenu.buttons[0].linkedMenu = MainMenu
+    PlayerSelectionMenu.buttons[0].linkedMenu = MainMenu
+
+    currentMenu = MainMenu
+    currentMenu.setName()
 
     while running:
         for event in pygame.event.get():
             mousePos = pygame.mouse.get_pos()
             if event.type == pygame.QUIT:
-                running = False
+                closeGame()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                for button in MainMenu.buttons:
-                    if button.isOver(mousePos):
-                        button.onClick("Coucou tu m'as cliqué")
-            if event.type == pygame.MOUSEMOTION:
-                for button in MainMenu.buttons:
-                    if button.isOver(mousePos):
-                        button.color = (255, 0, 0)
-                    else:
-                        button.color = (0, 255, 0)
+                if hasattr(currentMenu, "buttons"):
+                    for button in currentMenu.buttons:
+                        if hasattr(button, "isOver") and button.isOver(mousePos):
+                            if button.linkedMenu:
+                                currentMenu = button.linkedMenu
+                                currentMenu.setName()
+                                print(currentMenu.name)
+                            if button.onClick is not None:
+                                button.onClick()
+                if hasattr(currentMenu, "images"):
+                    if (currentMenu.name == "Xoxo") and (currentMenu.canPlay == True):
+                        for i in range(len(currentMenu.images)):
+                            if currentMenu.isOver(mousePos, i):
+                                currentMenu.addChoice(i)
         window.fill((255, 255, 255))
-        MainMenu.drawBackground(window)
-        MainMenu.drawButtons(window)
+        currentMenu.drawBackground(window)
+        if currentMenu.images is not None:
+            currentMenu.drawImages(window)
+        if hasattr(currentMenu, 'buttons') and currentMenu.name != "Xoxo":
+            currentMenu.drawButtons(window)
+        if currentMenu.name == "Xoxo":
+            currentMenu.drawChoiceImages(window)
+            if not currentMenu.canPlay:
+                window.blit(currentMenu.text,((WIDTH / 2) - 150, 50))
+                currentMenu.drawButtons(window)
         pygame.display.update()
+
 
 if __name__ == '__main__':
     main()
