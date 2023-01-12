@@ -20,11 +20,13 @@ def createMainMenu(SettingsMenu, PlayerSelectionMenu, HEIGHT):
         Button("./asset/blue_button.png", 0, ((HEIGHT / 2) + 50), "Settings", None, "./font/pixel.ttf", 35,
                (255, 255, 255), SettingsMenu),
         Button("./asset/blue_button.png", 0, ((HEIGHT / 2) + 125), "Quit", closeGame, "./font/pixel.ttf", 35,
-               (255, 255, 255))
+               (255, 255, 255)),
+        Button("./asset/logoTitle.png", 0, 0, "", None, "", 0, (255, 255, 255))
     ]
     MainMenuButtons[0].centerToMiddleScreen()
     MainMenuButtons[1].centerTheX()
     MainMenuButtons[2].centerTheX()
+    MainMenuButtons[3].centerTheX()
     MainMenu = Menu("./asset/background.png", [0, 0], MainMenuButtons, "Main Menu", None, None)
     MainMenu.buttons[0].linkedMenu.buttons[1].linkedMenu.buttons[0].linkedMenu = PlayerSelectionMenu
     return MainMenu
