@@ -71,27 +71,47 @@ class Xoxo(Game):
             if type(self.ChoiceImages[i]) is pygame.Surface:
                 window.blit(self.ChoiceImages[i], self.ChoiceImagesRects[i])
 
+    def save_score(self, score1, score2):
+        save = "X:" + str(score1) + "\nO:" + str(score2)
+        with open("save.txt", "w+") as fichier:
+            fichier.write(save)
+        fichier.close()
+
     def setTextWinner(self):
         if self.Choice == 'X':
             self.scores[1] += 1
+            self.save_score(self.scores[0], self.scores[1])
             self.text = self.font.render("The Winner is O: " + str(self.scores[1]), 1, (255, 255, 255))
         else:
             self.scores[0] += 1
+            self.save_score(self.scores[0], self.scores[1])
             self.text = self.font.render("The Winner is X: " + str(self.scores[0]), 1, (255, 255, 255))
 
     def checkWin(self):
         if self.isSameChoice(0, 1, 2) or self.isSameChoice(3, 4, 5) or self.isSameChoice(6, 7, 8):
             self.canPlay = False
             self.setTextWinner()
+            return ()
         elif self.isSameChoice(0, 3, 6) or self.isSameChoice(1, 4, 7) or self.isSameChoice(2, 5, 8):
             self.canPlay = False
             self.setTextWinner()
+            return ()
         elif self.isSameChoice(0, 4, 8) or self.isSameChoice(2, 4, 6):
             self.canPlay = False
             self.setTextWinner()
-        elif self.count == 9:
+            return ()
+        if self.count == 9:
             self.canPlay = False
             self.text = self.font.render("It's a Draw", 1, (255, 255, 255))
+            return ()
+
+def loadScore():
+    save = open("save.txt", "r")
+    contents = save.read()
+    contents_array = contents.split("\n")
+    x = contents_array[0].split(":")
+    o = contents_array[1].split(":")
+    return([int(x[1]), int(o[1])])
 
 def closeGame():
     pygame.display.quit()
@@ -114,7 +134,7 @@ def createXoxo():
         (620, 380), (700, 380), (780, 380),
         (620, 460), (700, 460), (780, 460)
     ]
-    GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, XoxoButtons, [0, 0])
+    GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, XoxoButtons, loadScore())
     GameXoxo.loadImages()
     GameXoxo.buttons[0].onClick = GameXoxo.resetXoxo
     GameXoxo.buttons[1].onClick = GameXoxo.resetXoxo
