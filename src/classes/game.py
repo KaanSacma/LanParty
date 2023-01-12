@@ -2,11 +2,12 @@ import pygame
 
 
 class Game:
-    def __init__(self, backgroundImage, position, name, images, imagesPos):
+    def __init__(self, backgroundImage, position, name, images, imagesPos, scores):
         self.background = pygame.image.load(backgroundImage)
         self.name = name
         self.images = images
         self.imagesPos = imagesPos
+        self.scores = scores
         self.imagesLoaded = images
         self.rect = self.background.get_rect()
         self.rect.left, self.rect.top = position
@@ -16,7 +17,6 @@ class Game:
     def loadImages(self):
         for i in range(len(self.images)):
             self.imagesLoaded[i] = pygame.image.load(self.images[i])
-            self.imagesLoaded[i] = pygame.transform.scale(self.imagesLoaded[i], (125, 125))
             self.rects[i] = self.imagesLoaded[i].get_rect()
             self.rects[i].left, self.rects[i].top = self.imagesPos[i]
 

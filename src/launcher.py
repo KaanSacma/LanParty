@@ -1,6 +1,7 @@
 import sys
 from classes.button import *
 from classes.menu import *
+from games.xoxo import *
 
 #Ferme La fenetre
 def closeGame():
@@ -40,7 +41,7 @@ def createPlayerSelectionMenu():
     #Créer les boutons depuis la classe Button et les stocks dans une liste
     PlayerSelectionMenuButtons = [
         Button("./asset/blue_button.png", 0, 0, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
-        Button("./asset/blue_button.png", 0, 0, "Bomberman", None, "./font/pixel.ttf", 25, (255, 255, 255))
+        Button("./asset/blue_button.png", 0, 0, "Xoxo", None, "./font/pixel.ttf", 25, (255, 255, 255), createXoxo())
     ]
     #Centre le Bouton 1 en plein millieu
     PlayerSelectionMenuButtons[1].centerToMiddleScreen()
