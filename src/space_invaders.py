@@ -236,5 +236,3 @@ while 1:
     pygame.display.flip()
   
     # py.display.update()
-  
-py.quit()
