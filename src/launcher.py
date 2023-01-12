@@ -35,7 +35,7 @@ def createMainMenu(SettingsMenu, PlayerSelectionMenu, HEIGHT):
 def createPlayerSelectionMenu():
     PlayerSelectionImagesPos = ([100, 100], [275, 100], [100, 275], [275, 275])
     PlayerSelectionMenuButtons = [
-        Button("./asset/blue_button.png", 0, 0, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
+        Button("./asset/blue_button.png", 40, 40, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
         Button("./asset/blue_button.png", 660, 540, "Xoxo", None, "./font/pixel.ttf", 25, (255, 255, 255), createXoxo()),
         Button("./asset/blue_button.png", 660, 600, "Space Invaders", launchSpaceInvader, "./font/pixel.ttf", 25, (255, 255, 255), None),
     ]
