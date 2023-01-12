@@ -14,21 +14,21 @@ clock = py.time.Clock()
 info = pygame.display.Info()
 WIDTH, HEIGHT = info.current_w, info.current_h
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-background = py.image.load("background.jpg").convert()
+background = py.image.load("./asset/background.jpg").convert()
 
 # Icon+captions
 py.display.set_caption("Space Invader!")
-icon = pygame.image.load("spaceship.png")
+icon = pygame.image.load("./asset/spaceship.png")
 pygame.display.set_icon(icon)
 
 # Ships
-shipIcon = pygame.image.load("spaceship.png")
+shipIcon = pygame.image.load("./asset/spaceship.png")
 new_ship = pygame.transform.scale(shipIcon, (80, 90))
 ship_x = 370
 ship_y = 700
 ship_xchange = 0
 
-ship2Icon = pygame.image.load("spaceship2.png")
+ship2Icon = pygame.image.load("./asset/spaceship2.png")
 new_ship2 = pygame.transform.scale(ship2Icon, (80, 90))
 ship2_x = 750
 ship2_y = 700
@@ -36,7 +36,7 @@ ship2_xchange = 0
 
 
 # Lasers
-laserfirst = pygame.image.load("newlaser.jpg")
+laserfirst = pygame.image.load("./asset/newlaser.jpg")
 laser = pygame.transform.scale(laserfirst, (15, 60))
 laser_x = 15
 laser_y = 700
@@ -44,7 +44,7 @@ laser_xchange = 0
 laser_ychange = 5
 laser_state = "ready"
 
-laser2first = pygame.image.load("newlaser2.jpg")
+laser2first = pygame.image.load("./asset/newlaser2.jpg")
 laser2 = pygame.transform.scale(laser2first, (15, 60))
 laser2_x = 30
 laser2_y = 700
@@ -61,7 +61,7 @@ enemy_ychange = []
 enemiesNumber = 15
 
 for i in range(enemiesNumber):
-    enemy_icon.append(pygame.image.load('pigeon.png'))
+    enemy_icon.append(pygame.image.load('./asset/pigeon.png'))
     enemy_x.append(random.randint(0, 650))
     enemy_y.append(random.randint(20, 150))
     enemy_xchange.append(2)
@@ -139,27 +139,27 @@ while 1:
             quit()
 
         if event.type == pygame.KEYDOWN or event.type == pygame.K_s:
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_q:
                 ship_xchange = -2
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_d:
                 ship_xchange = 2
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_e:
                 if laser_state == "ready":
                     laser_x = ship_x + 10
                     shoot_laser(laser_x, laser_y) 
-            if event.key == pygame.K_q:
+            if event.key == pygame.K_LEFT:
                 ship2_xchange = -2
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_RIGHT:
                 ship2_xchange = 2
-            if event.key == pygame.K_e:
+            if event.key == pygame.K_SPACE:
                 if laser2_state == "ready":
                     laser2_x = ship2_x + 10
                     shoot_laser2(laser2_x, laser2_y)
         
         if event.type == pygame.KEYUP or event.type == pygame.K_z:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                ship_xchange = 0
             if event.key == pygame.K_q or event.key == pygame.K_d:
+                ship_xchange = 0
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 ship2_xchange = 0
 
     ship_x += ship_xchange
