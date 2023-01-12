@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 
 from classes.game import *
 from classes.button import *
@@ -20,6 +20,7 @@ class Xoxo(Game):
         self.canPlay = True
         self.font = pygame.font.Font("./font/pixel.ttf", 32)
         self.text = ""
+        self.count = 0
 
     def resetXoxo(self):
         self.ChoiceImages = ["", "", "",
@@ -33,6 +34,7 @@ class Xoxo(Game):
                             "", "", ""]
         self.Choice = 'X'
         self.canPlay = True
+        self.count = 0
 
     def isOver(self, pos, i):
         if self.imagesPos[i][0] < pos[0] < self.imagesPos[i][0] + 70:
@@ -53,6 +55,7 @@ class Xoxo(Game):
                 self.Choice = 'X'
             self.ChoiceImagesRects[i] = self.ChoiceImages[i].get_rect()
             self.ChoiceImagesRects[i].left, self.ChoiceImagesRects[i].top = SquarePos
+            self.count += 1
             self.checkWin()
 
     def isSameChoice(self, pos1, pos2, pos3):
@@ -70,9 +73,11 @@ class Xoxo(Game):
 
     def setTextWinner(self):
         if self.Choice == 'X':
-            self.text = self.font.render("The Winner is O", 1, (255, 255, 255))
+            self.scores[1] += 1
+            self.text = self.font.render("The Winner is O: " + str(self.scores[1]), 1, (255, 255, 255))
         else:
-            self.text = self.font.render("The Winner is X", 1, (255, 255, 255))
+            self.scores[0] += 1
+            self.text = self.font.render("The Winner is X: " + str(self.scores[0]), 1, (255, 255, 255))
 
     def checkWin(self):
         if self.isSameChoice(0, 1, 2) or self.isSameChoice(3, 4, 5) or self.isSameChoice(6, 7, 8):
@@ -84,12 +89,20 @@ class Xoxo(Game):
         elif self.isSameChoice(0, 4, 8) or self.isSameChoice(2, 4, 6):
             self.canPlay = False
             self.setTextWinner()
+        elif self.count == 9:
+            self.canPlay = False
+            self.text = self.font.render("It's a Draw", 1, (255, 255, 255))
 
+def closeGame():
+    pygame.display.quit()
+    pygame.quit()
+    sys.exit()
 
 def createXoxo():
     XoxoButtons = [
-        Button("./asset/blue_button.png", 0, 0, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
-        Button("./asset/blue_button.png", 500, 500, "Continue", None, "./font/pixel.ttf", 25, (255, 255, 255), None)
+        Button("./asset/blue_button.png", 40, 40, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
+        Button("./asset/blue_button.png", 640, 540, "Continue", None, "./font/pixel.ttf", 25, (255, 255, 255), None),
+        Button("./asset/blue_button.png", 1300, 40, "Quit", closeGame, "./font/pixel.ttf", 25, (255, 255, 255), None)
     ]
     GameXoxoImages = [
         "./asset/square.png", "./asset/square.png", "./asset/square.png",
@@ -97,11 +110,12 @@ def createXoxo():
         "./asset/square.png", "./asset/square.png", "./asset/square.png"
     ]
     GameXoxoPos = [
-        (100, 100), (180, 100), (260, 100),
-        (100, 180), (180, 180), (260, 180),
-        (100, 260), (180, 260), (260, 260)
+        (620, 300), (700, 300), (780, 300),
+        (620, 380), (700, 380), (780, 380),
+        (620, 460), (700, 460), (780, 460)
     ]
     GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, XoxoButtons, [0, 0])
     GameXoxo.loadImages()
+    GameXoxo.buttons[0].onClick = GameXoxo.resetXoxo
     GameXoxo.buttons[1].onClick = GameXoxo.resetXoxo
     return GameXoxo
