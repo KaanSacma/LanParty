@@ -71,12 +71,19 @@ class Xoxo(Game):
             if type(self.ChoiceImages[i]) is pygame.Surface:
                 window.blit(self.ChoiceImages[i], self.ChoiceImagesRects[i])
 
+    def save_score(self, score1, score2):
+        save = "X:" + str(score1) + "\nO:" + str(score2)
+        with open("save.txt", "w+") as fichier:
+            fichier.write(save)
+
     def setTextWinner(self):
         if self.Choice == 'X':
             self.scores[1] += 1
+            self.save_score(self.scores[0], self.scores[1])
             self.text = self.font.render("The Winner is O: " + str(self.scores[1]), 1, (255, 255, 255))
         else:
             self.scores[0] += 1
+            self.save_score(self.scores[0], self.scores[1])
             self.text = self.font.render("The Winner is X: " + str(self.scores[0]), 1, (255, 255, 255))
 
     def checkWin(self):
