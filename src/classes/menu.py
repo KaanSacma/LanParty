@@ -14,11 +14,12 @@ class Menu:
             self.rects = list(imagesPos)
 
     def loadImages(self):
-        for i in range(len(self.images)):
-            self.imagesLoaded[i] = pygame.image.load(self.images[i])
-            self.imagesLoaded[i] = pygame.transform.scale(self.imagesLoaded[i], (125, 125))
-            self.rects[i] = self.imagesLoaded[i].get_rect()
-            self.rects[i].left, self.rects[i].top = self.imagesPos[i]
+        if self.images is not None:
+            for i in range(len(self.images)):
+                self.imagesLoaded[i] = pygame.image.load(self.images[i])
+                self.imagesLoaded[i] = pygame.transform.scale(self.imagesLoaded[i], (125, 125))
+                self.rects[i] = self.imagesLoaded[i].get_rect()
+                self.rects[i].left, self.rects[i].top = self.imagesPos[i]
 
     def setName(self):
         pygame.display.set_caption('Tech Party - ' + self.name)

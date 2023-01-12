@@ -9,6 +9,7 @@ from pygame.locals import *
 py.init() 
 
 clock = py.time.Clock()
+clock.tick(60)
 
 # Screen + Background
 info = pygame.display.Info()
@@ -236,5 +237,3 @@ while 1:
     pygame.display.flip()
   
     # py.display.update()
-  
-py.quit()

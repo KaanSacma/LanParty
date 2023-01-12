@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from classes.button import *
 from classes.menu import *
 from games.xoxo import *
@@ -9,6 +9,9 @@ def closeGame():
     pygame.display.quit()
     pygame.quit()
     sys.exit()
+
+def launchSpaceInvader():
+    os.system("python3 src/space_invaders.py")
 
 def createMainMenu(SettingsMenu, PlayerSelectionMenu, HEIGHT):
     MainMenuButtons = [
@@ -28,16 +31,14 @@ def createMainMenu(SettingsMenu, PlayerSelectionMenu, HEIGHT):
 
 
 def createPlayerSelectionMenu():
-    PlayerSelectionImages = ["./asset/male1.png", "./asset/male2.png", "./asset/female1.png", "./asset/female2.png"]
     PlayerSelectionImagesPos = ([100, 100], [275, 100], [100, 275], [275, 275])
     PlayerSelectionMenuButtons = [
         Button("./asset/blue_button.png", 0, 0, "Back", None, "./font/pixel.ttf", 35, (255, 255, 255)),
-        Button("./asset/blue_button.png", 0, 0, "Xoxo", None, "./font/pixel.ttf", 25, (255, 255, 255), createXoxo())
+        Button("./asset/blue_button.png", 660, 540, "Xoxo", None, "./font/pixel.ttf", 25, (255, 255, 255), createXoxo()),
+        Button("./asset/blue_button.png", 660, 600, "Space Invaders", launchSpaceInvader, "./font/pixel.ttf", 25, (255, 255, 255), None),
     ]
-    PlayerSelectionMenuButtons[1].centerToMiddleScreen()
-
     PlayerSelectionMenu = Menu("./asset/background.png", [0, 0], PlayerSelectionMenuButtons, "Player Selection Menu",
-                               PlayerSelectionImages, PlayerSelectionImagesPos)
+                               None, PlayerSelectionImagesPos)
     PlayerSelectionMenu.loadImages()
     return PlayerSelectionMenu
 
