@@ -43,7 +43,9 @@ def main():
                                 currentMenu = button.linkedMenu
                                 currentMenu.setName()
                                 print(currentMenu.name)
-                            if button.onClick is not None:
+                            if currentMenu.name != "Xoxo" and button.onClick is not None:
+                                button.onClick()
+                            elif currentMenu.name == "Xoxo" and not currentMenu.canPlay:
                                 button.onClick()
                 if hasattr(currentMenu, "images"):
                     if (currentMenu.name == "Xoxo") and (currentMenu.canPlay == True):

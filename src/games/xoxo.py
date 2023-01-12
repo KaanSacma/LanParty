@@ -91,15 +91,19 @@ class Xoxo(Game):
         if self.isSameChoice(0, 1, 2) or self.isSameChoice(3, 4, 5) or self.isSameChoice(6, 7, 8):
             self.canPlay = False
             self.setTextWinner()
+            return ()
         elif self.isSameChoice(0, 3, 6) or self.isSameChoice(1, 4, 7) or self.isSameChoice(2, 5, 8):
             self.canPlay = False
             self.setTextWinner()
+            return ()
         elif self.isSameChoice(0, 4, 8) or self.isSameChoice(2, 4, 6):
             self.canPlay = False
             self.setTextWinner()
-        elif self.count == 9:
+            return ()
+        if self.count == 9:
             self.canPlay = False
             self.text = self.font.render("It's a Draw", 1, (255, 255, 255))
+            return ()
 
 def loadScore():
     save = open("save.txt", "r")
