@@ -75,6 +75,7 @@ class Xoxo(Game):
         save = "X:" + str(score1) + "\nO:" + str(score2)
         with open("save.txt", "w+") as fichier:
             fichier.write(save)
+        fichier.close()
 
     def setTextWinner(self):
         if self.Choice == 'X':
@@ -100,6 +101,14 @@ class Xoxo(Game):
             self.canPlay = False
             self.text = self.font.render("It's a Draw", 1, (255, 255, 255))
 
+def loadScore():
+    save = open("save.txt", "r")
+    contents = save.read()
+    contents_array = contents.split("\n")
+    x = contents_array[0].split(":")
+    o = contents_array[1].split(":")
+    return([int(x[1]), int(o[1])])
+
 def closeGame():
     pygame.display.quit()
     pygame.quit()
@@ -121,7 +130,7 @@ def createXoxo():
         (620, 380), (700, 380), (780, 380),
         (620, 460), (700, 460), (780, 460)
     ]
-    GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, XoxoButtons, [0, 0])
+    GameXoxo = Xoxo("./asset/background.png", [0, 0], "Xoxo", GameXoxoImages, GameXoxoPos, XoxoButtons, loadScore())
     GameXoxo.loadImages()
     GameXoxo.buttons[0].onClick = GameXoxo.resetXoxo
     GameXoxo.buttons[1].onClick = GameXoxo.resetXoxo
